@@ -37,7 +37,7 @@ int r5 = A0;*/
 int size_of_input = 200;
 char *cloud;
 char *wd;
-char* inputs[4];
+char* inputs[6];
 int i;
  
 SoftwareSerial blueToothSerial(RxD,TxD);
@@ -109,7 +109,7 @@ void loop() {
 	parse_update(input_buffer);
         //blink_ack();
       }
-      Serial.print(recvChar);
+      //Serial.print(recvChar);
     }
     if(transmission_complete) {
       //update lights
@@ -117,7 +117,7 @@ void loop() {
     //check if there's any data sent from the local serial terminal, you can add the other applications here
     if(Serial.available()){
       recvChar  = Serial.read();
-      blueToothSerial.print(recvChar);
+      //blueToothSerial.print(recvChar);
     }
   }
 }
@@ -135,16 +135,12 @@ void parse_update(char* input_buffer) {
   wd     = strtok_r(NULL, ",", &t);
   inputs[1] = wd;
 
-  for (k=2; k<5; k++) {
-    inputs[k] = strtok(NULL, ",");
+  for (k=2; k<6; k++) {
+    inputs[k] = strtok_r(NULL, ",", &t);
   }
-  
-  /*do {
-    //inputs[count++] = atoi(strchr(strtok(NULL, ","), ':'));
-    inputs[count++] = atoi(strtok(NULL, ","));
-  } while (inputs[count - 1] != NULL);*/
+
   k = 0;
-  for (k = 0; k < 5; k++) {
+  for (k = 0; k < 6; k++) {
     Serial.println("Variable: "+ k);
     Serial.println(inputs[k]);
   }
